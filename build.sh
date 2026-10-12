@@ -1,9 +1,11 @@
 #!/bin/sh
-# Packages extension/ into dist/yc-deadline-countdown.zip for "Load unpacked".
+# Packages extension/ into dist/lofi-deadline-countdown.zip, ready for
+# chrome://extensions -> "Load unpacked".
 set -e
 cd "$(dirname "$0")"
-rm -rf dist && mkdir -p dist/yc-deadline-countdown
-cp -R extension/ dist/yc-deadline-countdown/
-(cd dist && zip -qrX yc-deadline-countdown.zip yc-deadline-countdown -x '*.DS_Store')
-rm -rf dist/yc-deadline-countdown
-echo "Built dist/yc-deadline-countdown.zip"
+NAME=lofi-deadline-countdown
+rm -rf dist && mkdir -p "dist/$NAME"
+cp -R extension/ "dist/$NAME/"
+(cd dist && zip -qrX "$NAME.zip" "$NAME" -x '*.DS_Store')
+rm -rf "dist/$NAME"
+echo "Built dist/$NAME.zip"

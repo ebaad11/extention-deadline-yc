@@ -4,11 +4,25 @@
   font-display: block;
 }
 
+/* --shadow / --accent / --dim are set per wallpaper from newtab.js. */
 :root {
   --ink: #fff8e7;
   --dim: #c9b8ff;
   --accent: #ff6600;
   --shadow: #1a0f2e;
+  --btn: #ff6600;
+  --scrim: rgba(26, 15, 46, 0.4);
+  /* Pixel outlines keep text readable on any wallpaper. */
+  --outline-sm:
+    -2px 0px 0 var(--shadow),
+    2px 0px 0 var(--shadow),
+    0px -2px 0 var(--shadow),
+    0px 2px 0 var(--shadow),
+    -2px -2px 0 var(--shadow),
+    2px -2px 0 var(--shadow),
+    -2px 2px 0 var(--shadow),
+    2px 2px 0 var(--shadow),
+    3px 3px 0 var(--shadow);
 }
 
 * {
@@ -20,7 +34,7 @@ body {
   margin: 0;
   height: 100%;
   overflow: hidden;
-  background: #1a0f2e;
+  background: var(--shadow);
   color: var(--ink);
   font-family: "PressStart", ui-monospace, monospace;
   -webkit-font-smoothing: none;
@@ -43,12 +57,27 @@ main {
   align-items: center;
   padding-top: 13vh;
   text-align: center;
+  pointer-events: none;
+}
+
+/* Soft shade behind the countdown, tinted per wallpaper. */
+main::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 2vh;
+  width: min(1200px, 110vw);
+  height: 78vh;
+  transform: translateX(-50%);
+  background: radial-gradient(closest-side, var(--scrim) 0%, var(--scrim) 45%, transparent 100%);
 }
 
 .logo {
   width: 72px;
   height: 72px;
   margin-bottom: 40px;
+  object-fit: contain;
   filter: drop-shadow(4px 4px 0 var(--shadow));
 }
 
@@ -56,12 +85,31 @@ main {
   display: flex;
   align-items: center;
   gap: 18px;
-  text-shadow: 6px 6px 0 var(--shadow);
+  text-shadow:
+    -3px 0px 0 var(--shadow),
+    3px 0px 0 var(--shadow),
+    0px -3px 0 var(--shadow),
+    0px 3px 0 var(--shadow),
+    -3px -3px 0 var(--shadow),
+    3px -3px 0 var(--shadow),
+    -3px 3px 0 var(--shadow),
+    3px 3px 0 var(--shadow),
+    6px 6px 0 var(--shadow);
 }
 
 .int {
   font-size: clamp(72px, 12vw, 160px);
   line-height: 1;
+  text-shadow:
+    -5px 0px 0 var(--shadow),
+    5px 0px 0 var(--shadow),
+    0px -5px 0 var(--shadow),
+    0px 5px 0 var(--shadow),
+    -5px -5px 0 var(--shadow),
+    5px -5px 0 var(--shadow),
+    -5px 5px 0 var(--shadow),
+    5px 5px 0 var(--shadow),
+    10px 10px 0 var(--shadow);
 }
 
 .side {
@@ -73,7 +121,6 @@ main {
 
 .frac {
   font-size: clamp(20px, 2.8vw, 38px);
-  font-variant-numeric: tabular-nums;
 }
 
 .unit {
@@ -83,16 +130,17 @@ main {
 
 .label {
   margin: 44px 0 0;
+  max-width: 90vw;
   font-size: 14px;
-  color: var(--ink);
-  text-shadow: 3px 3px 0 var(--shadow);
+  line-height: 1.6;
+  text-shadow: var(--outline-sm);
 }
 
 .clock {
-  margin: 18px 0 0;
+  margin: 14px 0 0;
   font-size: 18px;
   color: var(--accent);
-  text-shadow: 3px 3px 0 var(--shadow);
+  text-shadow: var(--outline-sm);
 }
 
 .when {
@@ -100,7 +148,7 @@ main {
   font-size: 10px;
   line-height: 1.8;
   color: var(--dim);
-  text-shadow: 2px 2px 0 var(--shadow);
+  text-shadow: var(--outline-sm);
 }
 
 /* Chunky 8-bit button: stepped corners via layered box-shadows. */
@@ -112,7 +160,7 @@ main {
   font-size: 12px;
   color: var(--ink);
   text-decoration: none;
-  background: var(--accent);
+  background: var(--btn);
   border: none;
   cursor: pointer;
   box-shadow:
@@ -137,47 +185,239 @@ main {
     inset 4px 4px 0 0 rgba(0, 0, 0, 0.25);
 }
 
+.btn[hidden] {
+  display: none;
+}
+
+.btn.small {
+  margin: 0;
+  padding: 9px 12px;
+  font-size: 9px;
+}
+
+.btn.ghost {
+  background: #3a3f5c;
+}
+
+.icon-btn {
+  margin: 0;
+  padding: 10px;
+  font-size: 9px;
+  line-height: 16px;
+  background: rgba(20, 20, 40, 0.55);
+}
+
+.icon-btn svg {
+  display: block;
+}
+
+.settings-btn {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 2;
+}
+
+/* Wallpaper dots */
+.dots {
+  position: fixed;
+  right: 28px;
+  top: 50%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transform: translateY(-50%);
+}
+
+.dot {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  padding: 0;
+  border: none;
+  background: var(--dim);
+  opacity: 0.7;
+  cursor: pointer;
+  box-shadow:
+    0 0 0 3px var(--shadow),
+    5px 5px 0 0 var(--shadow);
+}
+
+.dot[aria-current="true"] {
+  opacity: 1;
+  background: var(--accent);
+}
+
+.dot::after {
+  content: attr(data-name);
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  font: 8px "PressStart", monospace;
+  white-space: nowrap;
+  color: var(--ink);
+  text-shadow: var(--outline-sm);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dot:hover::after {
+  opacity: 1;
+}
+
+.toast {
+  position: fixed;
+  left: 28px;
+  bottom: 28px;
+  z-index: 2;
+  margin: 0;
+  font-size: 10px;
+  text-shadow: var(--outline-sm);
+  opacity: 0;
+  transition: opacity 0.4s steps(4);
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+.toast small {
+  display: block;
+  margin-top: 10px;
+  font-size: 7px;
+  color: var(--dim);
+}
+
+/* Music */
 .music {
   position: fixed;
   right: 28px;
   bottom: 28px;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+}
+
+.music-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.music .btn {
   margin: 0;
   font-size: 10px;
+}
+
+#music {
   background: #5b3fa8;
 }
 
-.music[aria-pressed="true"] {
-  background: var(--accent);
+#music[aria-pressed="true"] {
+  background: var(--btn);
 }
 
-.music[aria-pressed="true"] .note {
-  display: inline-block;
-  animation: bob 0.83s steps(2) infinite;
-}
-
-.hint {
-  position: fixed;
-  right: 28px;
-  bottom: 74px;
-  z-index: 2;
+.station {
   margin: 0;
   font-size: 8px;
-  color: var(--dim);
-  text-shadow: 2px 2px 0 var(--shadow);
+  color: var(--ink);
+  text-shadow: var(--outline-sm);
+}
+
+.station .blink {
   animation: blink 1s steps(2) infinite;
 }
 
-@keyframes bob {
-  to {
-    transform: translateY(-3px);
-  }
+.volume {
+  width: 80px;
+  accent-color: var(--accent);
 }
 
 @keyframes blink {
   50% {
     opacity: 0;
   }
+}
+
+/* Settings panel */
+.panel {
+  width: min(520px, 92vw);
+  padding: 28px;
+  color: var(--ink);
+  background: #171a2e;
+  border: none;
+  box-shadow:
+    0 -6px 0 0 var(--ink),
+    0 6px 0 0 var(--ink),
+    -6px 0 0 0 var(--ink),
+    6px 0 0 0 var(--ink),
+    12px 12px 0 0 rgba(0, 0, 0, 0.5);
+  font-family: inherit;
+  user-select: text;
+}
+
+.panel::backdrop {
+  background: rgba(5, 5, 15, 0.6);
+}
+
+.panel h2 {
+  margin: 0 0 24px;
+  font-size: 14px;
+  color: var(--accent);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+  font-size: 8px;
+  color: var(--dim);
+}
+
+.panel input[type="text"],
+.panel input[type="datetime-local"],
+.panel select {
+  width: 100%;
+  padding: 9px 10px;
+  font: 10px "PressStart", monospace;
+  color: var(--ink);
+  background: #0c0e1c;
+  border: 3px solid #3a3f5c;
+  outline: none;
+  color-scheme: dark;
+}
+
+.panel input:focus,
+.panel select:focus {
+  border-color: var(--accent);
+}
+
+.logo-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+#logo-preview {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  background: #0c0e1c;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.actions span {
+  flex: 1;
 }
 
 .done .int,

@@ -27,6 +27,7 @@ const Lofi = (() => {
   let step = 0;
   let nextTime = 0;
   let active = false;
+  let volume = 0.7;
 
   const freq = (m) => 440 * Math.pow(2, (m - 69) / 12);
 
@@ -232,7 +233,7 @@ const Lofi = (() => {
       active = true;
       nextTime = ctx.currentTime + 0.1;
       master.gain.cancelScheduledValues(ctx.currentTime);
-      master.gain.setTargetAtTime(0.8, ctx.currentTime, 0.6);
+      master.gain.setTargetAtTime(volume, ctx.currentTime, 0.6);
       timer = setInterval(pump, 25);
       pump();
     }
@@ -248,5 +249,10 @@ const Lofi = (() => {
     setTimeout(() => !active && ctx.suspend(), 800);
   }
 
-  return { start, stop, isPlaying: () => active && ctx.state === "running" };
+  function setVolume(v) {
+    volume = v;
+    if (active) master.gain.setTargetAtTime(v, ctx.currentTime, 0.1);
+  }
+
+  return { start, stop, setVolume, isPlaying: () => active && ctx.state === "running" };
 })();

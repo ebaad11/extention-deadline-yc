@@ -1,18 +1,19 @@
 {
   "manifest_version": 3,
-  "name": "YC Deadline Countdown",
-  "short_name": "YC Countdown",
-  "version": "1.0.0",
-  "description": "A lofi 8-bit new tab countdown to the YC Winter 2027 application deadline (Nov 2, 8pm PT).",
+  "name": "Lofi Deadline Countdown",
+  "short_name": "Lofi Countdown",
+  "version": "2.0.0",
+  "description": "A lofi 8-bit new tab that counts down to your deadline (YC W27 by default), with animated wallpapers and live lofi radio.",
+  "minimum_chrome_version": "116",
   "chrome_url_overrides": {
     "newtab": "newtab.html"
   },
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["alarms"],
+  "permissions": ["alarms", "storage", "offscreen"],
   "action": {
-    "default_title": "YC W27 deadline countdown",
+    "default_title": "Open the countdown",
     "default_icon": {
       "16": "icons/icon16.png",
       "32": "icons/icon32.png",
