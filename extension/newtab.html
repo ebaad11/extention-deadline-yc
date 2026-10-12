@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>New Tab · YC W27 Countdown</title>
+    <link rel="icon" href="icons/icon32.png" />
+    <link rel="stylesheet" href="newtab.css" />
+  </head>
+  <body>
+    <canvas id="scene" aria-hidden="true"></canvas>
+
+    <main>
+      <img class="logo" src="icons/logo.svg" alt="" width="72" height="72" />
+
+      <div class="counter" aria-live="off">
+        <span id="days-int" class="int">--</span>
+        <span class="side">
+          <span id="days-frac" class="frac">.0000000</span>
+          <span class="unit">days</span>
+        </span>
+      </div>
+
+      <p id="label" class="label"></p>
+      <p id="clock" class="clock"></p>
+      <p id="when" class="when"></p>
+
+      <a id="apply" class="btn" target="_blank" rel="noopener">&#9654; APPLY</a>
+    </main>
+
+    <button id="music" class="btn music" type="button" aria-pressed="false">
+      <span class="note">&#9835;</span> <span id="music-state">LOFI: OFF</span>
+    </button>
+    <p id="hint" class="hint" hidden>click anywhere to start the music</p>
+
+    <script src="config.js"></script>
+    <script src="scene.js"></script>
+    <script src="lofi.js"></script>
+    <script src="newtab.js"></script>
+  </body>
+</html>
