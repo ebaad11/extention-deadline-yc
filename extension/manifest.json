@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Lofi Deadline Countdown",
   "short_name": "Lofi Countdown",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A lofi 8-bit new tab that counts down to your deadline (YC W27 by default), with animated wallpapers and live lofi radio.",
   "minimum_chrome_version": "116",
   "chrome_url_overrides": {

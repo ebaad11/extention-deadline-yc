@@ -71,7 +71,7 @@ Add `#aurora` (or any scene id) to the URL to jump to a wallpaper.
 
 ```sh
 ./build.sh                       # -> dist/lofi-deadline-countdown.zip
-git tag v2.0.0 && git push --tags  # GitHub Action publishes the release
+git tag v2.0.1 && git push --tags  # GitHub Action publishes the release
 ```
 
 ## Credits
